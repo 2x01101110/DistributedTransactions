@@ -10,6 +10,7 @@
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.0.4" />
     <PackageReference Include="MassTransit.MongoDb" Version="7.0.4" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.4" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.7.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,12 +9,24 @@ namespace TravelAgency.API
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.ConfigureMasstransit();
+
+            services.AddOpenApiDocument(c =>
+            {
+                c.PostProcess = p =>
+                {
+                    p.Info.Title = "TravelAgency.API";
+                };
+            });
+            
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
