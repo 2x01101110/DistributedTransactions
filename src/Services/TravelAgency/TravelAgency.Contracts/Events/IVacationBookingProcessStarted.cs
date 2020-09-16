@@ -2,7 +2,7 @@
 
 namespace TravelAgency.Contracts.Masstransit.Events
 {
-    public interface IStartVacationBookingProcess
+    public interface IVacationBookingProcessStarted
     {
         Guid DealId { get; }
         Guid CustomerId { get; }

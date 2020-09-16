@@ -22,17 +22,17 @@ namespace TravelAgency.Components.Consumers
         {
             try
             {
-                this._logger.LogInformation($"Publishing {nameof(IStartVacationBookingProcess)} event " +
+                this._logger.LogInformation($"Publishing {nameof(IVacationBookingProcessStarted)} event " +
                     $"with payload {JsonConvert.SerializeObject(context.Message)}");
 
                 // Publish event indicating that vacation was booked
-                await context.Publish<IStartVacationBookingProcess>(new
+                await context.Publish<IVacationBookingProcessStarted>(new
                 {
                     context.Message.DealId,
                     context.Message.CustomerId
                 });
 
-                await context.RespondAsync<IBookVacationProcessAccepted>(new 
+                await context.RespondAsync<IVacationBookingProcessAccepted>(new 
                 { 
                     context.Message.DealId,
                     context.Message.CustomerId
@@ -42,7 +42,7 @@ namespace TravelAgency.Components.Consumers
             {
                 this._logger.LogError($"{nameof(IBookVacation)} command failed to complete, reason:\r\n{ex.Message}");
 
-                await context.RespondAsync<IBookVacationProcessRejected>(new
+                await context.RespondAsync<IVacationBookingProcessRejected>(new
                 {
                     context.Message.DealId,
                     context.Message.CustomerId,

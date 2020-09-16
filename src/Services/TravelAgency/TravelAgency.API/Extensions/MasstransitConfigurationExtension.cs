@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using TravelAgency.Components.Consumers;
 using TravelAgency.Components.StateMachines.VacationBooking;
 using TravelAgency.Contracts.Commands;
+using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
 
 namespace TravelAgency.API.Extensions
 {
@@ -19,7 +20,7 @@ namespace TravelAgency.API.Extensions
             {
                 cfg.AddConsumersFromNamespaceContaining<BookVacationConsumer>();
 
-                cfg.AddSagaStateMachine<VacationStateMachine, VacationState>()
+                cfg.AddSagaStateMachine<VacationBookingProcessStateMachine, VacationBookingProcessState>()
                     .MongoDbRepository(c =>
                     {
                         c.Connection = "mongodb://localhost:27017";
@@ -29,6 +30,7 @@ namespace TravelAgency.API.Extensions
                 cfg.UsingRabbitMq(Configure);
 
                 cfg.AddRequestClient<IBookVacation>();
+                cfg.AddRequestClient<IVacationBookingProcessStateRequest>();
             });
 
             services.AddMassTransitHostedService();

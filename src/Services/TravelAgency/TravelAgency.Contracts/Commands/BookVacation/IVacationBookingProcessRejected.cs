@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TravelAgency.Contracts.Commands.BookVacation
 {
-    public interface IBookVacationProcessRejected
+    public interface IVacationBookingProcessRejected
     {
         Guid DealId { get; }
         Guid CustomerId { get; }

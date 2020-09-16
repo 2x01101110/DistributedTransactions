@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TravelAgency.Components.StateMachines.VacationBooking
 {
-    public class VacationState : SagaStateMachineInstance, ISagaVersion
+    public class VacationBookingProcessState : SagaStateMachineInstance, ISagaVersion
     {
         public Guid CorrelationId { get; set; }
         public int Version { get; set; }
