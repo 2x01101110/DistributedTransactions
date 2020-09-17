@@ -4,8 +4,11 @@ using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using TravelAgency.Components.Consumers;
+using TravelAgency.Components.CourierActivities.RentCarActivity;
 using TravelAgency.Components.StateMachines.VacationBooking;
+using TravelAgency.Components.StateMachines.VacationBooking.Activities;
 using TravelAgency.Contracts.Commands;
+using TravelAgency.Contracts.Commands.FulfillVacationBooking;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
 
 namespace TravelAgency.API.Extensions
@@ -15,10 +18,14 @@ namespace TravelAgency.API.Extensions
         public static void ConfigureMasstransit(this IServiceCollection services)
         {
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+            services.AddScoped<VacationBookingProcessActivity>();
 
             services.AddMassTransit(cfg =>
             {
                 cfg.AddConsumersFromNamespaceContaining<BookVacationConsumer>();
+
+                //cfg.AddActivitiesFromNamespaceContaining<VacationBookingProcessActivity>();
+                cfg.AddActivitiesFromNamespaceContaining<RentCarActivity>();
 
                 cfg.AddSagaStateMachine<VacationBookingProcessStateMachine, VacationBookingProcessState>()
                     .MongoDbRepository(c =>
@@ -31,6 +38,7 @@ namespace TravelAgency.API.Extensions
 
                 cfg.AddRequestClient<IBookVacation>();
                 cfg.AddRequestClient<IVacationBookingProcessStateRequest>();
+                cfg.AddRequestClient<IFulfillVacationBooking>();
             });
 
             services.AddMassTransitHostedService();

@@ -1,11 +1,13 @@
 ﻿using Automatonymous;
 using GreenPipes;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Contracts.Commands.FulfillVacationBooking;
 using TravelAgency.Contracts.Masstransit.Events;
 
 namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
@@ -40,6 +42,15 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             context.Instance.Updated = DateTime.UtcNow;
             context.Instance.CustomerId = context.Data.CustomerId;
             context.Instance.DealId = context.Data.DealId;
+
+            var consumeContext = context.GetPayload<ConsumeContext>();
+            var sendEndpoint = await consumeContext.GetSendEndpoint(new Uri("queue:fulfill-vacation-booking"));
+
+            await sendEndpoint.Send<IFulfillVacationBooking>(new
+            {
+                context.Instance.DealId,
+                context.Instance.CustomerId
+            });
 
             await next.Execute(context).ConfigureAwait(false);
         }
