@@ -12,17 +12,17 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
     {
         public VacationBookingProcessStateMachine()
         {
-            Event(() => VacationBookingProcessStarted, x => x.CorrelateById(m => m.Message.DealId));
+            Event(() => VacationBookingProcessStarted, x => x.CorrelateById(m => m.Message.VacationId));
             Event(() => VacationBookingProcessStateRequest, x =>
             {
-                x.CorrelateById(m => m.Message.DealId);
+                x.CorrelateById(m => m.Message.VacationId);
                 x.OnMissingInstance(m => m.ExecuteAsync(async context =>
                 {
                     if (context.RequestId.HasValue)
                     {
                         await context.RespondAsync<IVacationBookingProcessStateNotFound>(new
                         {
-                            context.Message.DealId
+                            context.Message.VacationId
                         });
                     }
                 }));
@@ -42,7 +42,7 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
                 When(VacationBookingProcessStateRequest)
                 .RespondAsync(x => x.Init<IVacationBookingProcessState>(new
                 {
-                    x.Instance.DealId,
+                    x.Instance.VacationId,
                     x.Instance.State
                 })));
         }

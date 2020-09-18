@@ -25,35 +25,42 @@ namespace TravelAgency.API.Controllers
             this._bookVacationClient = bookVacationClient;
         }
 
-        [HttpGet("{dealId}")]
-        public async Task<IActionResult> GetReservationStatus([FromRoute]Guid dealId)
+        [HttpGet("{vacationId}")]
+        public async Task<IActionResult> GetReservationStatus([FromRoute]Guid vacationId)
         {
             var (status, notFound) = await this._vacationBookingProcessClient
                 .GetResponse<IVacationBookingProcessState, IVacationBookingProcessStateNotFound>(new
                 {
-                    DealId = dealId
+                    VacationId = vacationId
                 });
 
             if (status.IsCompletedSuccessfully)
             {
                 var result = await status;
-                return NotFound(result.Message);
+                return Ok(result.Message);
             }
             else
             {
                 var result = await notFound;
-                return BadRequest(result.Message);
+                return NotFound(result.Message);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation([FromBody]BookVacationModel model)
+        public async Task<IActionResult> CreateReservation([FromBody]VacationBookingModel model)
         {
             var (accepted, rejected) = await this._bookVacationClient
                 .GetResponse<IVacationBookingProcessAccepted, IVacationBookingProcessRejected>(new
                 {
                     model.DealId,
-                    model.CustomerId
+                    model.CustomerId,
+                    Hotel = new
+                    {
+                        model.Hotel.HotelId,
+                        model.Hotel.RoomId
+                    },
+                    model.TravelClass,
+                    model.CarId
                 });
 
             if (accepted.IsCompletedSuccessfully)

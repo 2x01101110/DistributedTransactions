@@ -23,12 +23,15 @@ namespace TravelAgency.Components.Consumers
 
             var builder = new RoutingSlipBuilder(NewId.NextGuid());
 
-            builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), new
+            if (context.Message.CarId != null)
             {
-                CarId = Guid.NewGuid(),
-                RentFrom = DateTime.UtcNow.AddDays(-7),
-                RentTo = DateTime.UtcNow
-            });
+                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), new
+                {
+                    context.Message.CarId,
+                    RentFrom = context.Message.VacationStart,
+                    RentTo = context.Message.VacationEnd
+                });
+            }
 
             var routingSlip = builder.Build();
 

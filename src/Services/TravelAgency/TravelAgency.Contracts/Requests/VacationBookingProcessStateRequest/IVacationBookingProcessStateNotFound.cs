@@ -6,6 +6,6 @@ namespace TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest
 {
     public interface IVacationBookingProcessStateNotFound
     {
-        Guid DealId { get; }
+        Guid VacationId { get; }
     }
 }

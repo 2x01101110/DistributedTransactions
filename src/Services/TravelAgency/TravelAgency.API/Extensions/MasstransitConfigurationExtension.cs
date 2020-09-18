@@ -23,7 +23,7 @@ namespace TravelAgency.API.Extensions
 
             services.AddMassTransit(cfg =>
             {
-                cfg.AddConsumersFromNamespaceContaining<BookVacationConsumer>();
+                cfg.AddConsumersFromNamespaceContaining<VacationBookingConsumer>();
 
                 //cfg.AddActivitiesFromNamespaceContaining<VacationBookingProcessActivity>();
                 cfg.AddActivitiesFromNamespaceContaining<RentCarActivity>();

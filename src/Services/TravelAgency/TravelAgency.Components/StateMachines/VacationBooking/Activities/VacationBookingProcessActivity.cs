@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.FulfillVacationBooking;
 using TravelAgency.Contracts.Masstransit.Events;
 
@@ -39,17 +40,37 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             this._logger.LogInformation($"Executing ${nameof(VacationBookingProcessActivity)} activity" +
                 $"\r\nPayload: ${JsonConvert.SerializeObject(context.Data)}");
 
-            context.Instance.Updated = DateTime.UtcNow;
-            context.Instance.CustomerId = context.Data.CustomerId;
+            context.Instance.VacationId = context.Data.VacationId;
+            context.Instance.VacationStart = context.Data.VacationStart;
+            context.Instance.VacationEnd = context.Data.VacationEnd;
             context.Instance.DealId = context.Data.DealId;
+            context.Instance.CustomerId = context.Data.CustomerId;
+            context.Instance.Hotel = new Hotel
+            {
+                HotelId = context.Data.Hotel.HotelId,
+                RoomId = context.Data.Hotel.RoomId
+            };
+            context.Instance.TravelClass = context.Data.TravelClass;
+            context.Instance.CarId = context.Data.CarId;
+            context.Instance.Updated = DateTime.UtcNow;
 
             var consumeContext = context.GetPayload<ConsumeContext>();
             var sendEndpoint = await consumeContext.GetSendEndpoint(new Uri("queue:fulfill-vacation-booking"));
 
             await sendEndpoint.Send<IFulfillVacationBooking>(new
             {
+                context.Instance.VacationId,
+                context.Instance.VacationStart,
+                context.Instance.VacationEnd,
                 context.Instance.DealId,
-                context.Instance.CustomerId
+                context.Instance.CustomerId,
+                Hotel = new
+                {
+                    context.Instance.Hotel.HotelId,
+                    context.Instance.Hotel.RoomId
+                },
+                context.Instance.TravelClass,
+                context.Instance.CarId
             });
 
             await next.Execute(context).ConfigureAwait(false);

@@ -6,7 +6,7 @@ namespace TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest
 {
     public interface IVacationBookingProcessState
     {
-        Guid DealId { get; }
+        Guid VacationId { get; }
         string State { get; }
     }
 }
