@@ -6,5 +6,6 @@ namespace TravelAgency.Components.CourierActivities.RentCarActivity
 {
     public interface IRentCarActivityLog
     {
+        Guid CarId { get; }
     }
 }

@@ -36,8 +36,8 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             BehaviorContext<VacationBookingProcessState, IVacationBookingProcessStarted> context, 
             Behavior<VacationBookingProcessState, IVacationBookingProcessStarted> next)
         {
-            this._logger.LogInformation($"Starting execution of ${nameof(VacationBookingProcessActivity)} with payload " +
-                $"${JsonConvert.SerializeObject(context.Data)}");
+            this._logger.LogInformation($"Executing ${nameof(VacationBookingProcessActivity)} activity" +
+                $"\r\nPayload: ${JsonConvert.SerializeObject(context.Data)}");
 
             context.Instance.Updated = DateTime.UtcNow;
             context.Instance.CustomerId = context.Data.CustomerId;
@@ -59,6 +59,12 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             BehaviorExceptionContext<VacationBookingProcessState, IVacationBookingProcessStarted, TException> context, 
             Behavior<VacationBookingProcessState, IVacationBookingProcessStarted> next) where TException : Exception
         {
+            var exception = context.Exception;
+
+            this._logger.LogError($"Execution of {nameof(VacationBookingProcessActivity)} activity failed" +
+                $"\r\nPayload: {JsonConvert.SerializeObject(context.Data)}" +
+                $"\r\nError: {exception.Message} {exception.StackTrace}");
+
             return next.Faulted(context);
         }
     }

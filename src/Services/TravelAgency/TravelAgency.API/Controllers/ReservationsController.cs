@@ -16,16 +16,13 @@ namespace TravelAgency.API.Controllers
     {
         readonly IRequestClient<IVacationBookingProcessStateRequest> _vacationBookingProcessClient;
         readonly IRequestClient<IBookVacation> _bookVacationClient;
-        readonly ILogger<ReservationsController> _logger;
 
         public ReservationsController(
             IRequestClient<IVacationBookingProcessStateRequest> vacationBookingProcessClient,
-            IRequestClient<IBookVacation> bookVacationClient,
-            ILogger<ReservationsController> logger)
+            IRequestClient<IBookVacation> bookVacationClient)
         {
             this._vacationBookingProcessClient = vacationBookingProcessClient;
             this._bookVacationClient = bookVacationClient;
-            this._logger = logger;
         }
 
         [HttpGet("{dealId}")]
@@ -52,7 +49,6 @@ namespace TravelAgency.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReservation([FromBody]BookVacationModel model)
         {
-            // Send IBookVacation book command to consumer
             var (accepted, rejected) = await this._bookVacationClient
                 .GetResponse<IVacationBookingProcessAccepted, IVacationBookingProcessRejected>(new
                 {

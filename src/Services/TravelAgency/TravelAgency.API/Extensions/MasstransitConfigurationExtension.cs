@@ -3,6 +3,7 @@ using MassTransit.Definition;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shared.Contracts.Events;
 using TravelAgency.Components.Consumers;
 using TravelAgency.Components.CourierActivities.RentCarActivity;
 using TravelAgency.Components.StateMachines.VacationBooking;
@@ -39,6 +40,7 @@ namespace TravelAgency.API.Extensions
                 cfg.AddRequestClient<IBookVacation>();
                 cfg.AddRequestClient<IVacationBookingProcessStateRequest>();
                 cfg.AddRequestClient<IFulfillVacationBooking>();
+                cfg.AddRequestClient<IRentCar>();
             });
 
             services.AddMassTransitHostedService();

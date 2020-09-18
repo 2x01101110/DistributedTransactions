@@ -22,10 +22,9 @@ namespace TravelAgency.Components.Consumers
         {
             try
             {
-                this._logger.LogInformation($"Publishing {nameof(IVacationBookingProcessStarted)} event " +
-                    $"with payload {JsonConvert.SerializeObject(context.Message)}");
+                this._logger.LogInformation($"Publishing {nameof(IVacationBookingProcessStarted)} event" +
+                    $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-                // Publish event indicating that vacation was booked
                 await context.Publish<IVacationBookingProcessStarted>(new
                 {
                     context.Message.DealId,
@@ -40,7 +39,9 @@ namespace TravelAgency.Components.Consumers
             }
             catch (Exception ex)
             {
-                this._logger.LogError($"{nameof(IBookVacation)} command failed to complete, reason:\r\n{ex.Message}");
+                this._logger.LogError($"An error occured in {nameof(IBookVacation)} consumer" +
+                    $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}" +
+                    $"\r\nError: {ex.Message} {ex.StackTrace}");
 
                 await context.RespondAsync<IVacationBookingProcessRejected>(new
                 {
