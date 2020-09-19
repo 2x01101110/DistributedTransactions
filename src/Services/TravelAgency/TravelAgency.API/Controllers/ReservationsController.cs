@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TravelAgency.API.Models;
 using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.BookVacation;
@@ -54,13 +54,7 @@ namespace TravelAgency.API.Controllers
                 {
                     model.DealId,
                     model.CustomerId,
-                    Hotel = new
-                    {
-                        model.Hotel.HotelId,
-                        model.Hotel.RoomId
-                    },
-                    model.TravelClass,
-                    model.CarId
+                    model.VacationExtras
                 });
 
             if (accepted.IsCompletedSuccessfully)

@@ -1,7 +1,9 @@
-﻿using MassTransit;
+﻿using GreenPipes.Internals.Extensions;
+using MassTransit;
 using MassTransit.Courier;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Shared.Contracts.CarRenting;
 using Shared.Contracts.Events;
 using System;
 using System.Threading.Tasks;
@@ -26,17 +28,29 @@ namespace TravelAgency.Components.CourierActivities.RentCarActivity
             this._logger.LogInformation($"Executing {nameof(RentCarActivity)} activity" +
                 $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-            var response = await this._rentCarClient.GetResponse<ICarRented>(new
+            var (accepted, rejected) = await this._rentCarClient.GetResponse<ICarRentalAccepted, ICarRentalRejected>(new
             {
                 context.Arguments.CarId,
                 context.Arguments.RentFrom,
                 context.Arguments.RentTo
             });
 
-            return context.Completed(new 
+            var test = accepted.IsCompletedSuccessfully();
+
+            if (accepted.IsCompletedSuccessfully())
             {
-                context.Arguments.CarId
-            });
+                var result = await accepted;
+
+                return context.Completed<IRentCarActivityLog>(new
+                {
+                    result.Message.CarRentalId
+                });
+            }
+            else {
+                var result = await rejected;
+
+                return context.Faulted();
+            }
         }
         
         public Task<CompensationResult> Compensate(CompensateContext<IRentCarActivityLog> context)

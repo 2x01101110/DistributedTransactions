@@ -1,13 +1,13 @@
 ﻿using MassTransit;
-using Shared.Contracts.Events.HotelReservation;
+using Shared.Contracts.Events.HotelBooking;
 using System;
 using System.Threading.Tasks;
 
 namespace HotelReservation.Components.Consumers
 {
-    public class ReserveHotelConsumer : IConsumer<IReserveHotel>
+    public class ReserveHotelConsumer : IConsumer<IBookHotel>
     {
-        public Task Consume(ConsumeContext<IReserveHotel> context)
+        public Task Consume(ConsumeContext<IBookHotel> context)
         {
             throw new NotImplementedException();
         }

@@ -25,34 +25,23 @@ namespace TravelAgency.Components.Consumers
                 this._logger.LogInformation($"Publishing {nameof(IVacationBookingProcessStarted)} event" +
                     $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-                // Assign unique Id to each vacation/vacation process
-                // Multiple customers may reference same DealId and it's theoretically possible
-                // for same client to book vacation twice, for example for himself and later for friends
-                var vacationId = Guid.NewGuid();
-
-                // We woudl probably get vacation duration - start/end time from db by date, not something user passes
-                var from = DateTime.UtcNow.Date.AddDays(-7);
-                var to = DateTime.UtcNow.Date;
-
-                var state = new
+                var publishReturnMessage = new
                 {
-                    VacationId = vacationId,
-                    VacationStart = from,
-                    VacationEnd = to,
-                    context.Message.DealId,
+                    VacationId = Guid.NewGuid(),
                     context.Message.CustomerId,
-                    Hotel = new
-                    {
-                        context.Message.Hotel.HotelId,
-                        context.Message.Hotel.RoomId
-                    },
-                    context.Message.TravelClass,
-                    context.Message.CarId
+
+                    // We would extract Hotel, RoomId, Departure, Return values from DB
+                    HotelId = Guid.NewGuid(),
+                    RoomId = Guid.NewGuid(),
+                    Departure = DateTime.UtcNow.Date.AddDays(20),
+                    Return = DateTime.UtcNow.Date.AddDays(34),
+                    
+                    context.Message.VacationExtras
                 };
 
-                await context.Publish<IVacationBookingProcessStarted>(state);
+                await context.Publish<IVacationBookingProcessStarted>(publishReturnMessage);
 
-                await context.RespondAsync<IVacationBookingProcessAccepted>(state);
+                await context.RespondAsync<IVacationBookingProcessAccepted>(publishReturnMessage);
             }
             catch (Exception ex)
             {

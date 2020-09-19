@@ -3,7 +3,7 @@ using MassTransit.Definition;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Shared.Contracts.Events;
+using Shared.Contracts.CarRenting;
 using TravelAgency.Components.Consumers;
 using TravelAgency.Components.CourierActivities.RentCarActivity;
 using TravelAgency.Components.StateMachines.VacationBooking;

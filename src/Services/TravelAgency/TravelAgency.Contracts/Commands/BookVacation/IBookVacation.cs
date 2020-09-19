@@ -8,20 +8,11 @@ namespace TravelAgency.Contracts.Commands
     {
         Guid DealId { get; }
         Guid CustomerId { get; }
-        IHotel Hotel { get; }
-        int TravelClass { get; }
-        Guid? CarId { get; }
+        VacationExtras VacationExtras { get; }
     }
 
-    public class Hotel : IHotel
-    {
-        public Guid HotelId { get; set; }
-        public Guid RoomId { get; set; }
-    }
-
-    public interface IHotel
-    {
-        Guid HotelId { get; }
-        Guid RoomId { get; }
+    public class VacationExtras
+    { 
+        public Guid? CarId { get; set; }
     }
 }

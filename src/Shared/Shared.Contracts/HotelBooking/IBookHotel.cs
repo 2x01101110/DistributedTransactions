@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Shared.Contracts.Events.HotelReservation
+namespace Shared.Contracts.Events.HotelBooking
 {
-    public interface IReserveHotel
+    public interface IBookHotel
     {
         Guid HotelId { get; }
         Guid RoomId { get; }

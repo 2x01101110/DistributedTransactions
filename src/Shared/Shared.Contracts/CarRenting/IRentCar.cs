@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared.Contracts.Events
+namespace Shared.Contracts.CarRenting
 {
     public interface IRentCar
     {

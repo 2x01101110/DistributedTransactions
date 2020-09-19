@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TravelAgency.Components.CourierActivities.RentCarActivity
+namespace Shared.Contracts.CarRenting
 {
-    public interface IRentCarActivityLog
+    public interface ICarRentalAccepted
     {
         Guid CarRentalId { get; }
     }

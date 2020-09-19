@@ -41,18 +41,8 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
                 $"\r\nPayload: ${JsonConvert.SerializeObject(context.Data)}");
 
             context.Instance.VacationId = context.Data.VacationId;
-            context.Instance.VacationStart = context.Data.VacationStart;
-            context.Instance.VacationEnd = context.Data.VacationEnd;
-            context.Instance.DealId = context.Data.DealId;
             context.Instance.CustomerId = context.Data.CustomerId;
-            context.Instance.Hotel = new Hotel
-            {
-                HotelId = context.Data.Hotel.HotelId,
-                RoomId = context.Data.Hotel.RoomId
-            };
-            context.Instance.TravelClass = context.Data.TravelClass;
-            context.Instance.CarId = context.Data.CarId;
-            context.Instance.Updated = DateTime.UtcNow;
+            context.Instance.Created = DateTime.UtcNow;
 
             var consumeContext = context.GetPayload<ConsumeContext>();
             var sendEndpoint = await consumeContext.GetSendEndpoint(new Uri("queue:fulfill-vacation-booking"));
@@ -60,20 +50,15 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             await sendEndpoint.Send<IFulfillVacationBooking>(new
             {
                 context.Instance.VacationId,
-                context.Instance.VacationStart,
-                context.Instance.VacationEnd,
-                context.Instance.DealId,
                 context.Instance.CustomerId,
-                Hotel = new
-                {
-                    context.Instance.Hotel.HotelId,
-                    context.Instance.Hotel.RoomId
-                },
-                context.Instance.TravelClass,
-                context.Instance.CarId
+                context.Data.HotelId,
+                context.Data.RoomId,
+                context.Data.Departure,
+                context.Data.Return,
+                context.Data.VacationExtras
             });
 
-            await next.Execute(context).ConfigureAwait(false);
+            await next.Execute(context);
         }
 
         public Task Faulted<TException>(
