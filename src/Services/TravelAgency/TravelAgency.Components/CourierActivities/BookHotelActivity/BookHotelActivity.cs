@@ -4,9 +4,6 @@ using MassTransit.Courier;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Shared.Contracts.Events.HotelBooking;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelAgency.Components.CourierActivities.BookHotelActivity
@@ -29,12 +26,12 @@ namespace TravelAgency.Components.CourierActivities.BookHotelActivity
             this._logger.LogInformation($"Executing {nameof(BookHotelActivity)} activity" +
                 $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-            /*var (accepted, rejected) = await this._hotelBookingClient.GetResponse<IHotelBookingAccepted, IHotelBookingRejected>(new
+            var (accepted, rejected) = await this._hotelBookingClient.GetResponse<IHotelBookingAccepted, IHotelBookingRejected>(new
             {
-                context.Arguments.Hotel.HotelId,
-                context.Arguments.Hotel.RoomId,
-                CheckInDate = context.Arguments.BookFrom,
-                CheckOutDate = context.Arguments.BookTo
+                context.Arguments.HotelId,
+                context.Arguments.RoomId,
+                context.Arguments.CheckIn,
+                context.Arguments.CheckOut,
             });
 
             if (accepted.IsCompletedSuccessfully())
@@ -55,9 +52,7 @@ namespace TravelAgency.Components.CourierActivities.BookHotelActivity
                     $"\r\nReason: {result.Message.Reason}");
 
                 return context.Faulted();
-            }*/
-
-            return context.Completed(new { });
+            }
         }
         
         public Task<CompensationResult> Compensate(CompensateContext<IBookHotelActivityLog> context)

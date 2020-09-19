@@ -1,11 +1,11 @@
-﻿using HotelReservation.Components.Consumers;
+﻿using FlightBooking.Components.Consumers;
 using MassTransit;
 using MassTransit.Definition;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace HotelReservation.API.Extensions
+namespace FlightBooking.API.Extensions
 {
     public static class MasstransitConfigurationExtension
     {
@@ -15,7 +15,7 @@ namespace HotelReservation.API.Extensions
 
             services.AddMassTransit(cfg =>
             {
-                cfg.AddConsumersFromNamespaceContaining<ReserveHotelConsumer>();
+                cfg.AddConsumersFromNamespaceContaining<FlightBookingConsumer>();
 
                 cfg.UsingRabbitMq(Configure);
             });

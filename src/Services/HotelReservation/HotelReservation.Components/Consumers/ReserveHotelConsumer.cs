@@ -7,9 +7,12 @@ namespace HotelReservation.Components.Consumers
 {
     public class ReserveHotelConsumer : IConsumer<IBookHotel>
     {
-        public Task Consume(ConsumeContext<IBookHotel> context)
+        public async Task Consume(ConsumeContext<IBookHotel> context)
         {
-            throw new NotImplementedException();
+            await context.RespondAsync<IHotelBookingAccepted>(new
+            {
+                BookingId = Guid.NewGuid()
+            });
         }
     }
 }

@@ -25,23 +25,36 @@ namespace TravelAgency.Components.Consumers
                 this._logger.LogInformation($"Publishing {nameof(IVacationBookingProcessStarted)} event" +
                     $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-                var publishReturnMessage = new
+                var vacationId = Guid.NewGuid();
+
+                await context.Publish<IVacationBookingProcessStarted>(new
                 {
-                    VacationId = Guid.NewGuid(),
+                    VacationId = vacationId,
                     context.Message.CustomerId,
-
-                    // We would extract Hotel, RoomId, Departure, Return values from DB
-                    HotelId = Guid.NewGuid(),
-                    RoomId = Guid.NewGuid(),
-                    Departure = DateTime.UtcNow.Date.AddDays(20),
-                    Return = DateTime.UtcNow.Date.AddDays(34),
-                    
+                    // This data would be obtained from some database based on deal id
+                    HotelBookingInformation = new HotelBookingInformation
+                    { 
+                        CheckIn = DateTime.UtcNow.Date.AddDays(20),
+                        CheckOut = DateTime.UtcNow.Date.AddDays(34),
+                        HotelId = Guid.NewGuid(),
+                        RoomId = Guid.NewGuid()
+                    },
+                    // This data would be obtained from some database based on deal id
+                    FlightBookingInformation = new FlightBookingInformation
+                    { 
+                        AirportId = Guid.NewGuid(),
+                        DepartureDate = DateTime.UtcNow.Date.AddDays(19),
+                        DestinationId = Guid.NewGuid(),
+                        ReturnDate = DateTime.UtcNow.Date.AddDays(35),
+                        ReturnId = Guid.NewGuid(),
+                    },
                     context.Message.VacationExtras
-                };
+                });
 
-                await context.Publish<IVacationBookingProcessStarted>(publishReturnMessage);
-
-                await context.RespondAsync<IVacationBookingProcessAccepted>(publishReturnMessage);
+                await context.RespondAsync<IVacationBookingProcessAccepted>(new
+                {
+                    VacationId = vacationId
+                });
             }
             catch (Exception ex)
             {

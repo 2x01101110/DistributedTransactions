@@ -23,13 +23,30 @@ namespace TravelAgency.Components.Consumers
 
             var builder = new RoutingSlipBuilder(NewId.NextGuid());
 
-            if (context.Message.VacationExtras.CarId != null)
+            builder.AddActivity("BookHotel", new Uri("queue:book-hotel_execute"), new 
+            { 
+                context.Message.HotelBookingInformation.CheckIn,
+                context.Message.HotelBookingInformation.CheckOut,
+                context.Message.HotelBookingInformation.HotelId,
+                context.Message.HotelBookingInformation.RoomId,
+            });
+
+            builder.AddActivity("BookFlight", new Uri("queue:book-flight_execute"), new 
             {
-                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), new
+                context.Message.FlightBookingInformation.AirportId,
+                context.Message.FlightBookingInformation.DepartureDate,
+                context.Message.FlightBookingInformation.DestinationId,
+                context.Message.FlightBookingInformation.ReturnDate,
+                context.Message.FlightBookingInformation.ReturnId
+            });
+
+            if (context.Message.VacationExtras.CarRental != null)
+            {
+                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), new 
                 {
-                    context.Message.VacationExtras.CarId,
-                    RentFrom = context.Message.Departure,
-                    RentTo = context.Message.Return
+                    context.Message.VacationExtras.CarRental.CarId,
+                    context.Message.VacationExtras.CarRental.RentFrom,
+                    context.Message.VacationExtras.CarRental.RentTo
                 });
             }
 

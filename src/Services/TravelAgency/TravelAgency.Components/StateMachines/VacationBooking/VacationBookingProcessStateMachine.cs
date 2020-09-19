@@ -1,9 +1,7 @@
 ﻿using Automatonymous;
 using MassTransit;
-using System;
 using TravelAgency.Components.StateMachines.VacationBooking.Activities;
 using TravelAgency.Contracts.Masstransit.Events;
-using TravelAgency.Contracts.Requests;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
 
 namespace TravelAgency.Components.StateMachines.VacationBooking

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace TravelAgency.Components.CourierActivities.BookFlightActivity
+namespace Shared.Contracts.FlightBooking
 {
-    public interface IBookFlightActivityArguments
+    public interface IBookFlight
     {
-        Guid AirportId { get;  }
+        Guid AirportId { get; }
         DateTime DepartureDate { get; }
         Guid DestinationId { get; }
         DateTime ReturnDate { get; }

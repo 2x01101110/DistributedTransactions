@@ -6,7 +6,7 @@ namespace Shared.Contracts.Events.HotelBooking
     {
         Guid HotelId { get; }
         Guid RoomId { get; }
-        DateTime CheckInDate { get; }
-        DateTime CheckOutDate { get; }
+        DateTime CheckIn { get; }
+        DateTime CheckOut { get; }
     }
 }

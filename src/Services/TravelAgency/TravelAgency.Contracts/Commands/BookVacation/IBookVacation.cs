@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using TravelAgency.Contracts.Masstransit.Events;
 
 namespace TravelAgency.Contracts.Commands
 {
@@ -9,10 +8,5 @@ namespace TravelAgency.Contracts.Commands
         Guid DealId { get; }
         Guid CustomerId { get; }
         VacationExtras VacationExtras { get; }
-    }
-
-    public class VacationExtras
-    { 
-        public Guid? CarId { get; set; }
     }
 }

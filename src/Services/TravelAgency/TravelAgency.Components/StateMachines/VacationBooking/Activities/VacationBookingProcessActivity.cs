@@ -50,11 +50,8 @@ namespace TravelAgency.Components.StateMachines.VacationBooking.Activities
             await sendEndpoint.Send<IFulfillVacationBooking>(new
             {
                 context.Instance.VacationId,
-                context.Instance.CustomerId,
-                context.Data.HotelId,
-                context.Data.RoomId,
-                context.Data.Departure,
-                context.Data.Return,
+                context.Data.HotelBookingInformation,
+                context.Data.FlightBookingInformation,
                 context.Data.VacationExtras
             });
 

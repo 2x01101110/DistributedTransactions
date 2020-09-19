@@ -15,19 +15,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelAgency.Components", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarRental", "CarRental", "{9066A635-B00E-437E-A11B-3EFCFF27FBBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.API", "Services\CarRental\CarRental.API\CarRental.API.csproj", "{FEE482AE-E64B-4949-94B1-972B5F1161FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.API", "Services\CarRental\CarRental.API\CarRental.API.csproj", "{FEE482AE-E64B-4949-94B1-972B5F1161FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.Components", "Services\CarRental\CarRental.Components\CarRental.Components.csproj", "{9539DCDB-49C6-47EC-A4EE-038A6457298E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Components", "Services\CarRental\CarRental.Components\CarRental.Components.csproj", "{9539DCDB-49C6-47EC-A4EE-038A6457298E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{D83E3F85-CEAC-4097-AF42-0D49E8162372}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Contracts", "Shared\Shared.Contracts\Shared.Contracts.csproj", "{FC84254E-09B8-4C38-A529-8238FDEE03C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Contracts", "Shared\Shared.Contracts\Shared.Contracts.csproj", "{FC84254E-09B8-4C38-A529-8238FDEE03C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HotelReservation", "HotelReservation", "{5B1EE09D-440F-4F82-9C3B-B75B391A3E6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.API", "Services\HotelReservation\HotelReservation.API\HotelReservation.API.csproj", "{BA914438-E680-4846-B350-DC8C4BB78CBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.API", "Services\HotelReservation\HotelReservation.API\HotelReservation.API.csproj", "{BA914438-E680-4846-B350-DC8C4BB78CBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelReservation.Components", "Services\HotelReservation\HotelReservation.Components\HotelReservation.Components.csproj", "{801867CB-BC78-41EC-898B-4B83484E246B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelReservation.Components", "Services\HotelReservation\HotelReservation.Components\HotelReservation.Components.csproj", "{801867CB-BC78-41EC-898B-4B83484E246B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlightBooking", "FlightBooking", "{70ADEF53-A75F-4853-895C-F60A280EDF3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightBooking.API", "Services\FlightBooking\FlightBooking.API\FlightBooking.API.csproj", "{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightBooking.Components", "Services\FlightBooking\FlightBooking.Components\FlightBooking.Components.csproj", "{9C9A38B5-E527-4026-88EE-76D934ECDF6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +73,14 @@ Global
 		{801867CB-BC78-41EC-898B-4B83484E246B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801867CB-BC78-41EC-898B-4B83484E246B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801867CB-BC78-41EC-898B-4B83484E246B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9A38B5-E527-4026-88EE-76D934ECDF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9A38B5-E527-4026-88EE-76D934ECDF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9A38B5-E527-4026-88EE-76D934ECDF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9A38B5-E527-4026-88EE-76D934ECDF6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +97,9 @@ Global
 		{5B1EE09D-440F-4F82-9C3B-B75B391A3E6A} = {431B9CFF-3524-4D99-B7E9-3D3094D5E01D}
 		{BA914438-E680-4846-B350-DC8C4BB78CBF} = {5B1EE09D-440F-4F82-9C3B-B75B391A3E6A}
 		{801867CB-BC78-41EC-898B-4B83484E246B} = {5B1EE09D-440F-4F82-9C3B-B75B391A3E6A}
+		{70ADEF53-A75F-4853-895C-F60A280EDF3F} = {431B9CFF-3524-4D99-B7E9-3D3094D5E01D}
+		{0AA5C6D8-AFEB-4522-BC4D-EFA4B23067F2} = {70ADEF53-A75F-4853-895C-F60A280EDF3F}
+		{9C9A38B5-E527-4026-88EE-76D934ECDF6E} = {70ADEF53-A75F-4853-895C-F60A280EDF3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1505742A-D1D3-49C9-BB45-F3BC7ED2C2A4}

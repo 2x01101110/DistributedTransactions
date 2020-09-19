@@ -9,11 +9,8 @@ namespace TravelAgency.Contracts.Masstransit.Events
         Guid VacationId { get; }
         Guid CustomerId { get; }
 
-        Guid HotelId { get; }
-        Guid RoomId { get; }
-
-        DateTime Departure { get; }
-        DateTime Return { get; }
+        HotelBookingInformation HotelBookingInformation { get; }
+        FlightBookingInformation FlightBookingInformation { get; }
 
         VacationExtras VacationExtras { get; }
     }
