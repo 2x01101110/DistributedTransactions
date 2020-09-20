@@ -1,13 +1,8 @@
-﻿using System;
+﻿using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Components.CourierActivities.BookFlightActivity
 {
-    public interface IBookFlightActivityArguments
+    public interface IBookFlightActivityArguments : IFlightBookingInformation
     {
-        Guid AirportId { get;  }
-        DateTime DepartureDate { get; }
-        Guid DestinationId { get; }
-        DateTime ReturnDate { get; }
-        Guid ReturnId { get; }
     }
 }

@@ -1,19 +1,5 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:57234",
-      "sslPort": 44329
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "HotelReservation.API": {
       "commandName": "Project",
       "environmentVariables": {

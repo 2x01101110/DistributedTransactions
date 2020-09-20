@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TravelAgency.Contracts.Commands.SharedCommandContracts;
+﻿using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Models
 {
     public class VacationExtras : IVacationExtras
     {
-        public ICarRental CarRental { get; set; }
+        public CarRental CarRental { get; set; }
+
+        ICarRental IVacationExtras.CarRental => this.CarRental;
     }
 }

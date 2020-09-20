@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared.Contracts\Shared.Contracts.csproj" />
     <ProjectReference Include="..\TravelAgency.Contracts\TravelAgency.Contracts.csproj" />
+    <ProjectReference Include="..\TravelAgency.Models\TravelAgency.Models.csproj" />
   </ItemGroup>
 
 </Project>

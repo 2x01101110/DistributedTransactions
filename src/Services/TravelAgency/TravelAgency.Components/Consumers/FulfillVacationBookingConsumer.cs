@@ -2,10 +2,14 @@
 using MassTransit.Courier;
 using MassTransit.Courier.Contracts;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TravelAgency.Contracts.Commands.FulfillVacationBooking;
 using TravelAgency.Contracts.Events;
+using TravelAgency.Models;
 
 namespace TravelAgency.Components.Consumers
 {
@@ -25,31 +29,13 @@ namespace TravelAgency.Components.Consumers
 
             var builder = new RoutingSlipBuilder(NewId.NextGuid());
 
-            builder.AddActivity("BookHotel", new Uri("queue:book-hotel_execute"), new 
-            { 
-                context.Message.HotelBookingInformation.CheckIn,
-                context.Message.HotelBookingInformation.CheckOut,
-                context.Message.HotelBookingInformation.HotelId,
-                context.Message.HotelBookingInformation.RoomId,
-            });
+            builder.AddActivity("BookHotel", new Uri("queue:book-hotel_execute"), context.Message.FlightBookingInformation);
 
-            builder.AddActivity("BookFlight", new Uri("queue:book-flight_execute"), new 
-            {
-                context.Message.FlightBookingInformation.AirportId,
-                context.Message.FlightBookingInformation.DepartureDate,
-                context.Message.FlightBookingInformation.DestinationId,
-                context.Message.FlightBookingInformation.ReturnDate,
-                context.Message.FlightBookingInformation.ReturnId
-            });
+            builder.AddActivity("BookFlight", new Uri("queue:book-flight_execute"), context.Message.HotelBookingInformation);
 
             if (context.Message.VacationExtras.CarRental != null)
             {
-                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), new 
-                {
-                    context.Message.VacationExtras.CarRental.CarId,
-                    context.Message.VacationExtras.CarRental.RentFrom,
-                    context.Message.VacationExtras.CarRental.RentTo
-                });
+                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), context.Message.VacationExtras.CarRental);
             }
 
             await builder.AddSubscription(context.SourceAddress,

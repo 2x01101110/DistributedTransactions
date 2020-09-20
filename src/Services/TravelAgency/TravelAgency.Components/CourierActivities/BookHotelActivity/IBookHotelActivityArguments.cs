@@ -1,12 +1,9 @@
 ﻿using System;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Components.CourierActivities.BookHotelActivity
 {
-    public interface IBookHotelActivityArguments
+    public interface IBookHotelActivityArguments : IHotelBookingInformation
     {
-        Guid HotelId { get; }
-        Guid RoomId { get; }
-        DateTime CheckIn { get; }
-        DateTime CheckOut { get; }
     }
 }

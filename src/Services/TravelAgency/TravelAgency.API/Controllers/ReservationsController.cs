@@ -3,11 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TravelAgency.API.Models;
 using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.BookVacation;
 using TravelAgency.Contracts.Commands.SharedCommandContracts;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
+using TravelAgency.Models;
 
 namespace TravelAgency.API.Controllers
 {
@@ -50,14 +52,11 @@ namespace TravelAgency.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReservation([FromBody]VacationBookingModel model)
         {
-            var test = (IVacationExtras)model.VacationExtras;
-
             var (accepted, rejected) = await this._bookVacationClient
                 .GetResponse<IVacationBookingProcessAccepted, IVacationBookingProcessRejected>(new
                 {
-
-                    DealId = default(Guid),
-                    CustomerId = default(Guid),
+                    model.DealId,
+                    model.CustomerId,
                     VacationExtras = (IVacationExtras)model.VacationExtras
                 });
 

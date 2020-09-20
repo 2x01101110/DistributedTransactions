@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.BookVacation;
 using TravelAgency.Contracts.Masstransit.Events;
+using TravelAgency.Models;
 
 namespace TravelAgency.Components.Consumers
 {
@@ -31,22 +32,20 @@ namespace TravelAgency.Components.Consumers
                 {
                     VacationId = vacationId,
                     context.Message.CustomerId,
-                    // This data would be obtained from some database based on deal id
-                    HotelBookingInformation = new HotelBookingInformation
-                    { 
-                        CheckIn = DateTime.UtcNow.Date.AddDays(20),
-                        CheckOut = DateTime.UtcNow.Date.AddDays(34),
+                    HotelBookingInformation = new
+                    {
                         HotelId = Guid.NewGuid(),
-                        RoomId = Guid.NewGuid()
+                        RoomId = Guid.NewGuid(),
+                        CheckIn = DateTime.UtcNow.AddDays(20).Day,
+                        CheckOut = DateTime.UtcNow.AddDays(27).Day
                     },
-                    // This data would be obtained from some database based on deal id
-                    FlightBookingInformation = new FlightBookingInformation
-                    { 
+                    FlightBookingInformation = new
+                    {
                         AirportId = Guid.NewGuid(),
-                        DepartureDate = DateTime.UtcNow.Date.AddDays(19),
+                        DepartureDate = DateTime.UtcNow.AddDays(19).Day,
                         DestinationId = Guid.NewGuid(),
-                        ReturnDate = DateTime.UtcNow.Date.AddDays(35),
-                        ReturnId = Guid.NewGuid(),
+                        ReturnDate = DateTime.UtcNow.AddDays(27).Day,
+                        ReturnId = Guid.NewGuid()
                     },
                     context.Message.VacationExtras
                 });

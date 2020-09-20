@@ -13,6 +13,7 @@ namespace TravelAgency.API.Models
         [Required]
         public Guid CustomerId { get; set; }
 
+        [Required]
         public VacationExtras VacationExtras { get; set; }
     }
 }
