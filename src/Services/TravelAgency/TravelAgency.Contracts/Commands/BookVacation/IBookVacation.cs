@@ -1,5 +1,5 @@
 ﻿using System;
-using TravelAgency.Contracts.Masstransit.Events;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Contracts.Commands
 {
@@ -7,6 +7,6 @@ namespace TravelAgency.Contracts.Commands
     {
         Guid DealId { get; }
         Guid CustomerId { get; }
-        VacationExtras VacationExtras { get; }
+        IVacationExtras VacationExtras { get; }
     }
 }

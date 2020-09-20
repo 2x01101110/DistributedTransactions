@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TravelAgency.Contracts.Commands;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Contracts.Masstransit.Events
 {
@@ -9,9 +10,9 @@ namespace TravelAgency.Contracts.Masstransit.Events
         Guid VacationId { get; }
         Guid CustomerId { get; }
 
-        HotelBookingInformation HotelBookingInformation { get; }
-        FlightBookingInformation FlightBookingInformation { get; }
+        IHotelBookingInformation HotelBookingInformation { get; }
+        IFlightBookingInformation FlightBookingInformation { get; }
 
-        VacationExtras VacationExtras { get; }
+        IVacationExtras VacationExtras { get; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAgency.API.Models;
 using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.BookVacation;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
 
 namespace TravelAgency.API.Controllers
@@ -49,12 +50,15 @@ namespace TravelAgency.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReservation([FromBody]VacationBookingModel model)
         {
+            var test = (IVacationExtras)model.VacationExtras;
+
             var (accepted, rejected) = await this._bookVacationClient
                 .GetResponse<IVacationBookingProcessAccepted, IVacationBookingProcessRejected>(new
                 {
-                    model.DealId,
-                    model.CustomerId,
-                    model.VacationExtras
+
+                    DealId = default(Guid),
+                    CustomerId = default(Guid),
+                    VacationExtras = (IVacationExtras)model.VacationExtras
                 });
 
             if (accepted.IsCompletedSuccessfully)

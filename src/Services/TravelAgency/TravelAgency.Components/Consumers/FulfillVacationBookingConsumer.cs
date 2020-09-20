@@ -1,9 +1,11 @@
 ﻿using MassTransit;
 using MassTransit.Courier;
+using MassTransit.Courier.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using TravelAgency.Contracts.Commands.FulfillVacationBooking;
+using TravelAgency.Contracts.Events;
 
 namespace TravelAgency.Components.Consumers
 {
@@ -49,6 +51,14 @@ namespace TravelAgency.Components.Consumers
                     context.Message.VacationExtras.CarRental.RentTo
                 });
             }
+
+            await builder.AddSubscription(context.SourceAddress,
+                RoutingSlipEvents.Completed | RoutingSlipEvents.Supplemental,
+                RoutingSlipEventContents.None, x => x.Send<IVacationBookingFulfillmentCompleted>(new
+                {
+                    context.Message.VacationId,
+                    Timestamp = DateTime.UtcNow
+                }));
 
             var routingSlip = builder.Build();
 

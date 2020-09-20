@@ -1,6 +1,7 @@
 ﻿using Automatonymous;
 using MassTransit;
 using TravelAgency.Components.StateMachines.VacationBooking.Activities;
+using TravelAgency.Contracts.Events;
 using TravelAgency.Contracts.Masstransit.Events;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
 
@@ -10,6 +11,7 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
     {
         public VacationBookingProcessStateMachine()
         {
+            
             Event(() => VacationBookingProcessStarted, x => x.CorrelateById(m => m.Message.VacationId));
             Event(() => VacationBookingProcessStateRequest, x =>
             {
@@ -25,6 +27,7 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
                     }
                 }));
             });
+            Event(() => VacationBookingFulfilled, x => x.CorrelateById(m => m.Message.VacationId));
 
             InstanceState(x => x.State);
 
@@ -34,7 +37,9 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
                     .TransitionTo(Processing));
 
             During(Processing, 
-                Ignore(VacationBookingProcessStarted));
+                Ignore(VacationBookingProcessStarted),
+                When(VacationBookingFulfilled)
+                    .TransitionTo(ProcessingCompleted));
 
             DuringAny(
                 When(VacationBookingProcessStateRequest)
@@ -50,5 +55,6 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
 
         public Event<IVacationBookingProcessStarted> VacationBookingProcessStarted { get; set; }
         public Event<IVacationBookingProcessStateRequest> VacationBookingProcessStateRequest { get; set; }
+        public Event<IVacationBookingFulfillmentCompleted> VacationBookingFulfilled { get; set; }
     }
 }

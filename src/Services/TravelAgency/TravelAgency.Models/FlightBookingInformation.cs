@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
-namespace TravelAgency.Contracts.Masstransit.Events
+namespace TravelAgency.Models
 {
-    public class FlightBookingInformation
+    public class FlightBookingInformation : IFlightBookingInformation
     {
         public Guid AirportId { get; set; }
         public DateTime DepartureDate { get; set; }

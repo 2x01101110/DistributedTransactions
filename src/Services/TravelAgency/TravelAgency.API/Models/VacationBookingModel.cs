@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TravelAgency.Contracts.Masstransit.Events;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
+using TravelAgency.Models;
 
 namespace TravelAgency.API.Models
 {

@@ -1,11 +1,11 @@
-﻿using HotelReservation.Components.Consumers;
+﻿using HotelBooking.Components.Consumers;
 using MassTransit;
 using MassTransit.Definition;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace HotelReservation.API.Extensions
+namespace HotelBooking.API.Extensions
 {
     public static class MasstransitConfigurationExtension
     {

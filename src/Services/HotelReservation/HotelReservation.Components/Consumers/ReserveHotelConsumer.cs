@@ -3,7 +3,7 @@ using Shared.Contracts.Events.HotelBooking;
 using System;
 using System.Threading.Tasks;
 
-namespace HotelReservation.Components.Consumers
+namespace HotelBooking.Components.Consumers
 {
     public class ReserveHotelConsumer : IConsumer<IBookHotel>
     {

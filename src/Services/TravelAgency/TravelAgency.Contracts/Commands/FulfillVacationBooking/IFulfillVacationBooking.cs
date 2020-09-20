@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TravelAgency.Contracts.Masstransit.Events;
+using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Contracts.Commands.FulfillVacationBooking
 {
     public interface IFulfillVacationBooking
     {
         Guid VacationId { get; }
-        HotelBookingInformation HotelBookingInformation { get; }
-        FlightBookingInformation FlightBookingInformation { get; }
-        VacationExtras VacationExtras { get; }
+        IHotelBookingInformation HotelBookingInformation { get; }
+        IFlightBookingInformation FlightBookingInformation { get; }
+        IVacationExtras VacationExtras { get; }
     }
 }
