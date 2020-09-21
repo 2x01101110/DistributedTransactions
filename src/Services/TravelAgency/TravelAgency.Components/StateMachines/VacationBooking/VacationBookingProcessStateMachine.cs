@@ -1,5 +1,6 @@
 ﻿using Automatonymous;
 using MassTransit;
+using System;
 using TravelAgency.Components.StateMachines.VacationBooking.Activities;
 using TravelAgency.Contracts.Events;
 using TravelAgency.Contracts.Masstransit.Events;
@@ -28,6 +29,7 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
                 }));
             });
             Event(() => VacationBookingFulfilled, x => x.CorrelateById(m => m.Message.VacationId));
+            Event(() => VacationBookingFailed, x => x.CorrelateById(m => m.Message.VacationId));
 
             InstanceState(x => x.State);
 
@@ -39,7 +41,17 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
             During(Processing, 
                 Ignore(VacationBookingProcessStarted),
                 When(VacationBookingFulfilled)
-                    .TransitionTo(ProcessingCompleted));
+                    .Then(context => 
+                    {
+                        context.Instance.Updated = DateTime.UtcNow;
+                    })
+                    .TransitionTo(ProcessingCompleted),
+                When(VacationBookingFailed)
+                    .Then(context =>
+                    {
+                        context.Instance.Updated = DateTime.UtcNow;
+                    })
+                    .TransitionTo(ProcessingFailed));
 
             DuringAny(
                 When(VacationBookingProcessStateRequest)
@@ -52,9 +64,11 @@ namespace TravelAgency.Components.StateMachines.VacationBooking
 
         public State Processing { get; set; }
         public State ProcessingCompleted { get; set; }
+        public State ProcessingFailed { get; set; }
 
         public Event<IVacationBookingProcessStarted> VacationBookingProcessStarted { get; set; }
         public Event<IVacationBookingProcessStateRequest> VacationBookingProcessStateRequest { get; set; }
         public Event<IVacationBookingFulfillmentCompleted> VacationBookingFulfilled { get; set; }
+        public Event<IVacationBookingFulfillmentFailed> VacationBookingFailed { get; set; }
     }
 }

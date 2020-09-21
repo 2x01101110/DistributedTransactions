@@ -7,10 +7,8 @@ namespace TravelAgency.Contracts.Masstransit.Events
     {
         Guid VacationId { get; }
         Guid CustomerId { get; }
-
         IHotelBookingInformation HotelBookingInformation { get; }
         IFlightBookingInformation FlightBookingInformation { get; }
-
         IVacationExtras VacationExtras { get; }
     }
 }

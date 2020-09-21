@@ -17,10 +17,10 @@ namespace TravelAgency.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureLogging((context, logging) =>
-                {
-                    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
                 });
+                //.ConfigureLogging((context, logging) =>
+                //{
+                //    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
+                //});
     }
 }

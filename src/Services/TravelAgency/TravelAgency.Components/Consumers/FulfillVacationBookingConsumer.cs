@@ -29,21 +29,32 @@ namespace TravelAgency.Components.Consumers
 
             var builder = new RoutingSlipBuilder(NewId.NextGuid());
 
-            builder.AddActivity("BookHotel", new Uri("queue:book-hotel_execute"), context.Message.FlightBookingInformation);
+            builder.AddActivity("BookHotel", 
+                new Uri("queue:book-hotel_execute"), context.Message.FlightBookingInformation);
 
-            builder.AddActivity("BookFlight", new Uri("queue:book-flight_execute"), context.Message.HotelBookingInformation);
+            builder.AddActivity("BookFlight", 
+                new Uri("queue:book-flight_execute"), context.Message.HotelBookingInformation);
 
             if (context.Message.VacationExtras.CarRental != null)
             {
-                builder.AddActivity("RentCar", new Uri("queue:rent-car_execute"), context.Message.VacationExtras.CarRental);
+                builder.AddActivity("RentCar", 
+                    new Uri("queue:rent-car_execute"), context.Message.VacationExtras.CarRental);
             }
 
             await builder.AddSubscription(context.SourceAddress,
-                RoutingSlipEvents.Completed | RoutingSlipEvents.Supplemental,
-                RoutingSlipEventContents.None, x => x.Send<IVacationBookingFulfillmentCompleted>(new
+                RoutingSlipEvents.Completed | RoutingSlipEvents.Supplemental, RoutingSlipEventContents.None, 
+                x => x.Send<IVacationBookingFulfillmentCompleted>(new
                 {
                     context.Message.VacationId,
                     Timestamp = DateTime.UtcNow
+                }));
+
+            await builder.AddSubscription(context.SourceAddress,
+                RoutingSlipEvents.Faulted | RoutingSlipEvents.Supplemental, RoutingSlipEventContents.None,
+                x => x.Send<IVacationBookingFulfillmentFailed>(new
+                {
+                    context.Message.VacationId,
+                    Reason = "Some reason"
                 }));
 
             var routingSlip = builder.Build();

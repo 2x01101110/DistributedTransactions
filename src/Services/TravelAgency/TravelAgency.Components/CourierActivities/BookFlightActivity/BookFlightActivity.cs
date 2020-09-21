@@ -25,7 +25,7 @@ namespace TravelAgency.Components.CourierActivities.BookFlightActivity
         public async Task<ExecutionResult> Execute(ExecuteContext<IBookFlightActivityArguments> context)
         {
             this._logger.LogInformation($"Executing {nameof(BookFlightActivity)} activity" +
-                $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
+                $"\r\nPayload: {JsonConvert.SerializeObject(context.Arguments)}");
 
             var (accepted, rejected) = await this._flightBookingClient
                 .GetResponse<IBookFlightAccepted, IBookFlightRejected>(new

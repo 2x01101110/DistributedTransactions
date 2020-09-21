@@ -24,7 +24,7 @@ namespace TravelAgency.Components.CourierActivities.BookHotelActivity
         public async Task<ExecutionResult> Execute(ExecuteContext<IBookHotelActivityArguments> context)
         {
             this._logger.LogInformation($"Executing {nameof(BookHotelActivity)} activity" +
-                $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
+                $"\r\nPayload: {JsonConvert.SerializeObject(context.Arguments)}");
 
             var (accepted, rejected) = await this._hotelBookingClient.GetResponse<IHotelBookingAccepted, IHotelBookingRejected>(new
             {

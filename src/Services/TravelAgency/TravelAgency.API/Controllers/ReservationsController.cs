@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using TravelAgency.API.Models;
 using TravelAgency.Contracts.Commands;
 using TravelAgency.Contracts.Commands.BookVacation;
 using TravelAgency.Contracts.Commands.SharedCommandContracts;
 using TravelAgency.Contracts.Requests.VacationBookingProcessStateRequest;
-using TravelAgency.Models;
 
 namespace TravelAgency.API.Controllers
 {

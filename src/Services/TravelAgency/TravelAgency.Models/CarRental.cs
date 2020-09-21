@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TravelAgency.Contracts.Commands.SharedCommandContracts;
 
 namespace TravelAgency.Models

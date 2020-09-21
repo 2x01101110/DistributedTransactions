@@ -4,8 +4,6 @@ using MassTransit.Courier;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Shared.Contracts.CarRenting;
-using Shared.Contracts.Events;
-using System;
 using System.Threading.Tasks;
 
 namespace TravelAgency.Components.CourierActivities.RentCarActivity
@@ -26,7 +24,7 @@ namespace TravelAgency.Components.CourierActivities.RentCarActivity
         public async Task<ExecutionResult> Execute(ExecuteContext<IRentCarActivityArguments> context)
         {
             this._logger.LogInformation($"Executing {nameof(RentCarActivity)} activity" +
-                $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
+                $"\r\nPayload: {JsonConvert.SerializeObject(context.Arguments)}");
 
             var (accepted, rejected) = await this._rentCarClient.GetResponse<ICarRentalAccepted, ICarRentalRejected>(new
             {
