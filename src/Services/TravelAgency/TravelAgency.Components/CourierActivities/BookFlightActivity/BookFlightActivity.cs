@@ -57,12 +57,18 @@ namespace TravelAgency.Components.CourierActivities.BookFlightActivity
             }
         }
 
-        public Task<CompensationResult> Compensate(CompensateContext<IBookFlightActivityLog> context)
+        public async Task<CompensationResult> Compensate(CompensateContext<IBookFlightActivityLog> context)
         {
             this._logger.LogWarning($"Compensating {nameof(BookFlightActivity)} activity" +
                 $"\r\nCompensation log: {JsonConvert.SerializeObject(context.Log)}");
 
-            return Task.FromResult(context.Compensated());
+            await context.Publish<ICancelFlightBooking>(new
+            {
+                context.Log.DepartureFlightId,
+                context.Log.ReturnFLightId
+            });
+
+            return context.Compensated();
         }
     }
 }

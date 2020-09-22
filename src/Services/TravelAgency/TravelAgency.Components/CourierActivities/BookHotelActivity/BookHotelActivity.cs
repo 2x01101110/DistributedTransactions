@@ -4,6 +4,7 @@ using MassTransit.Courier;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Shared.Contracts.Events.HotelBooking;
+using Shared.Contracts.HotelBooking;
 using System.Threading.Tasks;
 
 namespace TravelAgency.Components.CourierActivities.BookHotelActivity
@@ -55,12 +56,17 @@ namespace TravelAgency.Components.CourierActivities.BookHotelActivity
             }
         }
         
-        public Task<CompensationResult> Compensate(CompensateContext<IBookHotelActivityLog> context)
+        public async Task<CompensationResult> Compensate(CompensateContext<IBookHotelActivityLog> context)
         {
             this._logger.LogWarning($"Compensating {nameof(BookHotelActivity)} activity" +
                 $"\r\nCompensation log: {JsonConvert.SerializeObject(context.Log)}");
 
-            return Task.FromResult(context.Compensated());
+            await context.Publish<ICancelHotelBooking>(new
+            {
+                context.Log.BookingId
+            });
+
+            return context.Compensated();
         }
     }
 }

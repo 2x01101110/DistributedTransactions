@@ -1,13 +1,16 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Shared.Contracts.CarRental;
 using Shared.Contracts.CarRenting;
 using System;
 using System.Threading.Tasks;
 
 namespace CarRental.Components.Consumers
 {
-    public class RentCarConsumer : IConsumer<IRentCar>
+    public class RentCarConsumer : 
+        IConsumer<IRentCar>,
+        IConsumer<ICancelCarRental>
     {
         private readonly ILogger<RentCarConsumer> _logger;
 
@@ -21,10 +24,20 @@ namespace CarRental.Components.Consumers
             this._logger.LogInformation($"Processing {nameof(IRentCar)} event" +
                 $"\r\nPayload: {JsonConvert.SerializeObject(context.Message)}");
 
-            await context.RespondAsync<ICarRentalAccepted>(new
-            {
-                CarRentalId = Guid.NewGuid()
-            });
+            throw new Exception("Exception");
+
+            //await context.RespondAsync<ICarRentalAccepted>(new
+            //{
+            //    CarRentalId = Guid.NewGuid()
+            //});
+        }
+
+        public Task Consume(ConsumeContext<ICancelCarRental> context)
+        {
+            this._logger.LogWarning($"Processing {nameof(ICancelCarRental)} event" +
+                $"Canceling car rental: {context.Message.CarRentalId}");
+
+            return Task.CompletedTask;
         }
     }
 }

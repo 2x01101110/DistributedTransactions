@@ -3,15 +3,17 @@ using MassTransit;
 using MassTransit.Courier;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Shared.Contracts.CarRental;
 using Shared.Contracts.CarRenting;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace TravelAgency.Components.CourierActivities.RentCarActivity
 {
     public class RentCarActivity : IActivity<IRentCarActivityArguments, IRentCarActivityLog>
     {
-        private readonly ILogger<RentCarActivity> _logger;
         private readonly IRequestClient<IRentCar> _rentCarClient;
+        private readonly ILogger<RentCarActivity> _logger;
 
         public RentCarActivity(
             IRequestClient<IRentCar> rentCarClient,
@@ -51,12 +53,17 @@ namespace TravelAgency.Components.CourierActivities.RentCarActivity
             }
         }
         
-        public Task<CompensationResult> Compensate(CompensateContext<IRentCarActivityLog> context)
+        public async Task<CompensationResult> Compensate(CompensateContext<IRentCarActivityLog> context)
         {
             this._logger.LogWarning($"Compensating {nameof(RentCarActivity)} activity" +
                 $"\r\nCompensation log: {JsonConvert.SerializeObject(context.Log)}");
 
-            return Task.FromResult(context.Compensated());
+            await context.Publish<ICancelCarRental>(new
+            {
+                context.Log.CarRentalId
+            });
+
+            return context.Compensated();
         }
     }
 }
